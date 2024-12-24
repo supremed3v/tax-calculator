@@ -1,12 +1,12 @@
 {
-    "TaxRate": 0,
-    "InputPrices": [
+    "tax_rate": 0,
+    "input_prices": [
         9.99,
         10.49,
         15.89,
         12
     ],
-    "TaxIncludedPrices": {
+    "tax_included_prices": {
         "10.49": "10.49",
         "12.00": "12.00",
         "15.89": "15.89",
