@@ -8,6 +8,7 @@ import (
 )
 
 type TaxIncludedPriceJob struct {
+	IOManger          filemanger.FileManager
 	TaxRate           float64
 	InputPrices       []float64
 	TaxIncludedPrices map[string]string
@@ -15,7 +16,7 @@ type TaxIncludedPriceJob struct {
 
 func (job *TaxIncludedPriceJob) LoadData() {
 
-	lines, err := filemanger.ReadLines("prices.txt")
+	lines, err := job.IOManger.ReadLines()
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -46,11 +47,12 @@ func (job *TaxIncludedPriceJob) Process() {
 
 	// Write the entire struct to a JSON file which has entire struct which has a different name for every job
 
-	filemanger.WriteJSON(fmt.Sprintf("result_%.0f.json", job.TaxRate*100), job)
+	job.IOManger.WriteResult(job)
 }
 
-func NewTaxIncludedPriceJob(taxRate float64) *TaxIncludedPriceJob {
+func NewTaxIncludedPriceJob(fm filemanger.FileManager, taxRate float64) *TaxIncludedPriceJob {
 	return &TaxIncludedPriceJob{
+		IOManger: fm,
 		InputPrices: []float64{
 			10, 20, 30,
 		},
