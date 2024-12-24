@@ -4,14 +4,14 @@ import (
 	"fmt"
 
 	"example.com/price-calculator/conversion"
-	"example.com/price-calculator/filemanger"
+	"example.com/price-calculator/iomanager"
 )
 
 type TaxIncludedPriceJob struct {
-	IOManger          filemanger.FileManager `json:"-"`
-	TaxRate           float64                `json:"tax_rate"`
-	InputPrices       []float64              `json:"input_prices"`
-	TaxIncludedPrices map[string]string      `json:"tax_included_prices"`
+	IOManger          iomanager.IOManger `json:"-"`
+	TaxRate           float64            `json:"tax_rate"`
+	InputPrices       []float64          `json:"input_prices"`
+	TaxIncludedPrices map[string]string  `json:"tax_included_prices"`
 }
 
 func (job *TaxIncludedPriceJob) LoadData() {
@@ -50,9 +50,9 @@ func (job *TaxIncludedPriceJob) Process() {
 	job.IOManger.WriteResult(job)
 }
 
-func NewTaxIncludedPriceJob(fm filemanger.FileManager, taxRate float64) *TaxIncludedPriceJob {
+func NewTaxIncludedPriceJob(iom iomanager.IOManger, taxRate float64) *TaxIncludedPriceJob {
 	return &TaxIncludedPriceJob{
-		IOManger: fm,
+		IOManger: iom,
 		InputPrices: []float64{
 			10, 20, 30,
 		},
